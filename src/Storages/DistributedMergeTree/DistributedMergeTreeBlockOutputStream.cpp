@@ -5,6 +5,7 @@
 #include <Interpreters/Context.h>
 #include <Interpreters/PartLog.h>
 
+#include <common/ClockUtils.h>
 
 namespace DB
 {
@@ -102,6 +103,7 @@ void DistributedMergeTreeBlockOutputStream::write(const Block & block)
     for (auto & current_block : blocks)
     {
         DWAL::Record record{DWAL::OpCode::ADD_DATA_BLOCK, std::move(current_block.block)};
+        record.headers["_send_time"] = std::to_string(UTCMilliseconds::now());
         record.partition_key = current_block.shard;
         if (!query_context->getIdempotentKey().empty())
         {

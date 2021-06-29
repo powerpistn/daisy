@@ -246,7 +246,9 @@
     M(S3WriteRequestsThrottling, "Number of 429 and 503 errors in POST, DELETE, PUT and PATCH requests to S3 storage.") \
     M(S3WriteRequestsRedirects, "Number of redirects in POST, DELETE, PUT and PATCH requests to S3 storage.") \
     M(QueryMemoryLimitExceeded, "Number of times when memory limit exceeded for query.") \
-
+    \
+    M(DistributedMergeTreeInsertWaitMicroseconds, "Latency between insert request and consumption of records in kafka.") \
+    M(DistributedMergeTreeKafkaConsumeCount, "Number of times when consume records from kafka.") \
 
 namespace ProfileEvents
 {

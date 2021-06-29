@@ -269,5 +269,10 @@ private:
     pcg64 rng;
 
     std::atomic_flag stopped = ATOMIC_FLAG_INIT;
+
+    // Metrics
+    Progress progress_in;
+    Progress progress_out;
+    ProfileEvents::Counters performance_counters{VariableContext::Snapshot};
 };
 }

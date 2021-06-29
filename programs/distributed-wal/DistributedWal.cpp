@@ -11,6 +11,8 @@
 #include <Common/TerminalSize.h>
 #include <Common/ThreadPool.h>
 
+#include <common/ClockUtils.h>
+
 #include <boost/program_options.hpp>
 
 #include <fstream>
@@ -619,6 +621,7 @@ void ingestAsync(DWalPtr & wal, ResultQueue & result_queue, mutex & stdout_mutex
         auto record = make_shared<DWAL::Record>(OpCode::ADD_DATA_BLOCK, prepareData(bench_settings.producer_settings.batch_size));
         record->partition_key = 0;
         record->headers["_idem"] = to_string(i);
+        record->headers["_send_time"] = std::to_string(UTCMilliseconds::now());
 
         unique_ptr<Data> data{new Data(cmutex, inflights, result_queue, total, failed, i)};
 

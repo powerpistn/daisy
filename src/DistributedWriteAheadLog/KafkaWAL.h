@@ -66,6 +66,9 @@ struct KafkaWALContext
     /// Per topic max message size
     Int32 message_max_bytes = -1;
 
+    /// Compress the data block before send to kafka
+    bool compress_block = false;
+
     static String topicPartitonKey(const String & topic, Int32 partition) { return topic + "$" + std::to_string(partition); }
 
     String key() const { return topicPartitonKey(topic, partition); }
@@ -91,6 +94,7 @@ struct KafkaWALContext
         ctxes.push_back("consume_callback_max_messages_size=" + std::to_string(consume_callback_max_messages_size));
         ctxes.push_back("consume_callback_timeout_ms=" + std::to_string(consume_callback_timeout_ms));
         ctxes.push_back("message_max_bytes=" + std::to_string(message_max_bytes));
+        ctxes.push_back("compress_block=" + std::to_string(compress_block));
 
         return boost::algorithm::join(ctxes, " ");
     }
@@ -104,8 +108,16 @@ struct KafkaWALContext
     }
 
     KafkaWALContext(
-        const String & topic_, Int32 partitions_, Int32 replication_factor_, const String & cleanup_policy_ = "delete")
-        : topic(topic_), partitions(partitions_), replication_factor(replication_factor_), cleanup_policy(cleanup_policy_)
+        const String & topic_,
+        Int32 partitions_,
+        Int32 replication_factor_,
+        const String & cleanup_policy_ = "delete",
+        const bool compress_block_ = false)
+        : topic(topic_)
+        , partitions(partitions_)
+        , replication_factor(replication_factor_)
+        , cleanup_policy(cleanup_policy_)
+        , compress_block(compress_block_)
     {
     }
 

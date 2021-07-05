@@ -267,6 +267,8 @@ void MetadataService::startup()
     /// Producer settings
     kctx.request_required_acks = conf.request_required_acks;
     kctx.request_timeout_ms = conf.request_timeout_ms;
+    /// Compression settings
+    kctx.compress_block = conf.compress_block;
 
     std::any append_ctx = kctx;
 

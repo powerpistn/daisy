@@ -61,7 +61,7 @@ public:
 
     void setPathParameter(const String & name, const String & value) { path_parameters[name] = value; }
 
-    const String & getQueryParameter(const String & name, const String & default_value = "") const
+    const String & getQueryParameter(const String & name, String default_value = "") const
     {
         return query_parameters->get(name, default_value);
     }
